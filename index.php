@@ -1,3 +1,28 @@
+<?php
+include 'DataReader.php';
+
+$format = $_GET['format'] ?? 'undefined';
+$listChecks = ['gender', 'age', 'profession'];
+
+$slides = readDataJson();
+$isFiltered = false;
+foreach ($listChecks as $check) {
+    if (isset($_GET[$check])) {
+        $slides = filterBy($slides, $check, $_GET[$check]);
+        $isFiltered = true;
+        break;
+    }
+}
+if (!$isFiltered) {
+    $slides = limitBy($slides, 4);
+}
+
+if ($format == 'json') {
+    echo json_encode($slides);
+    return;
+}
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -5,6 +30,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
+    <script src="sliders-reader.js"></script>
     <title>Test</title>
 </head>
 
@@ -12,38 +38,67 @@
     <header></header>
     <main>
         <h1>Test</h1>
-        <div id="slider">
-            <div id="slide">
+        <div class="slider-cover">
+        <div id="slider" class="slider slider-animate">
+            <?php foreach ($slides as $slide): ?>
+            <div class="slide">
                 <div class="slide__name">
                     <span>name:</span>
                     <br>
-                    <span class="data"></span>
+                    <span class="data"><?php echo $slide['name']?></span>
                 </div>
                 <div class="slide__gender">
                     <span>gender:</span>
                     <br>
-                    <span class="data"></span>
+                    <span class="data"><?php echo $slide['gender']?></span>
                 </div>
                 <div class="slide__age">
                     <span>age:</span>
                     <br>
-                    <span class="data"></span>
+                    <span class="data"><?php echo $slide['age']?></span>
                 </div>
                 <div class="slide__profession">
                     <span>profession:</span>
                     <br>
-                    <span class="data"></span>
+                    <span class="data"><?php echo $slide['profession']?></span>
                 </div>
             </div>
+            <?php endforeach; ?>
+        </div>
         </div>
         <div id="slider-btns">
-            <a href="">>30 years</a>
-            <a href="">< 50 years</a> 
-            <a href="">IT</a>
-            <a href="">No IT</a>
-            <a href="">Men</a>
-            <a href="">Women</a>
+            <a href="?age=&lt;30">&lt;30 years</a>
+            <a href="?age=&gt;50">&gt; 50 years</a>
+            <a href="?profession=IT">IT</a>
+            <a href="?profession=!IT">No IT</a>
+            <a href="?gender=men">Men</a>
+            <a href="?gender=women">Women</a>
+            <a href="?">Clear filters</a>
         </div>
+        <script type="text/x-template" id="slider-template">
+            <div class="slide">
+                <div class="slide__name">
+                    <span>name:</span>
+                    <br>
+                    <span class="data">{name}</span>
+                </div>
+                <div class="slide__gender">
+                    <span>gender:</span>
+                    <br>
+                    <span class="data">{gender}</span>
+                </div>
+                <div class="slide__age">
+                    <span>age:</span>
+                    <br>
+                    <span class="data">{age}</span>
+                </div>
+                <div class="slide__profession">
+                    <span>profession:</span>
+                    <br>
+                    <span class="data">{profession}</span>
+                </div>
+            </div>
+        </script>
         <br>
         <hr>
         <br>
