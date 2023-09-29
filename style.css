@@ -51,6 +51,17 @@ body {
     background: rgba(120, 120, 120, 1);
 }
 
+@keyframes scroll {
+    0% { transform: translateX(0); }
+    1% { transform: translateX(0); }
+    100% { transform: translateX(calc(-1 * 50vw * (var(--slides-count) - 1))); }
+}
+.slider-animate {
+    animation: scroll calc((var(--slides-count) - 1) * 5s) linear infinite;
+}
+.slider-animate:hover {
+    animation-play-state: paused;
+}
 
 
 #anim {
