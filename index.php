@@ -31,6 +31,8 @@ if ($format == 'json') {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
     <script src="sliders-reader.js"></script>
+    <script src="https://unpkg.com/gsap@3.12.2/dist/gsap.min.js"></script>
+    <script src="animate-svg.js"></script>
     <title>Test</title>
 </head>
 
@@ -39,7 +41,7 @@ if ($format == 'json') {
     <main>
         <h1>Test</h1>
         <div class="slider-cover">
-        <div id="slider" class="slider slider-animate">
+        <div id="slider" class="slider slider-animate" style="--slides-count: <?php echo count($slides) ?>">
             <?php foreach ($slides as $slide): ?>
             <div class="slide">
                 <div class="slide__name">
@@ -104,6 +106,7 @@ if ($format == 'json') {
         <br>
         <div id="anim">
             <svg class="plane" id="plane" viewBox="0 0 219 96" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <g id="plane-holder">
                 <path
                     d="M65.7137 85.954L32.6429 94.0122L12.2852 76.024L19.4842 72.8828L43.4807 82.1216L89.9488 64.1789L67.4505 54.773L53.5545 50.8897L63.3892 47.1791L102.051 50.8897L102.918 46.7241L104.365 43.5393L120.759 36.08L128.592 33.902L138.6 36.08L142.081 38.4756L176.24 30.6352L181.679 32.3775L192.122 50.8897L166.667 60.0369L65.7137 85.954Z"
                     fill="#232323"></path>
@@ -132,24 +135,27 @@ if ($format == 'json') {
                 <path
                     d="M168.982 34.8565C168.982 34.8565 167.757 38.5293 165.823 42.7653L162.243 39.4911L159.345 40.448L164.618 45.2819C162.972 48.5411 160.99 51.7853 158.876 53.6989L164.163 51.9597C165.368 51.1524 166.339 49.5178 167.096 47.5543L170.001 50.2155L172.92 49.2537L167.991 44.7487C169.058 40.6772 169.361 36.2469 168.982 34.8516V34.8565Z"
                     fill="white"></path>
+                </g>
             </svg>
 
-            <svg class="arrow arrow--svg strokeDrawAnim" width="810" height="158" viewBox="0 0 810 158" fill="none"
+            <svg style="visibility: hidden" class="arrow arrow--svg strokeDrawAnim" width="810" height="158" viewBox="0 0 810 158" fill="none"
                 xmlns="http://www.w3.org/2000/svg">
                 <path
                     d="M752.516 118.456L759.088 115.251L774.922 147.639L806.008 129.284L809.697 135.612L771.865 157.95L752.516 118.456Z"
                     fill="#D22E40"></path>
                 <path
+                    id="path-left"
                     d="M4 87.3981C92.058 80.1802 137.741 158.304 316.534 32.5423C403.64 -28.7274 410.366 107.608 487.169 114.073C591.055 122.817 558.445 57.3761 639.441 15.2583C720.437 -26.8596 804.48 69.2114 773.721 149.18"
                     stroke="#D22E40" stroke-width="8"></path>
             </svg>
 
-            <svg class="arrow arrow--svg strokeDrawAnim" width="816" height="246" viewBox="0 0 816 246" fill="none"
+            <svg style="visibility: hidden" class="arrow arrow--svg strokeDrawAnim" width="816" height="246" viewBox="0 0 816 246" fill="none"
                 xmlns="http://www.w3.org/2000/svg">
                 <path
                     d="M48.6839 243.109L47.1827 237.282L85.1713 228.968L75.0739 200.717L82.6574 198.601L94.9473 233.087L48.6839 243.109Z"
                     fill="#D22E40"></path>
                 <path
+                    id="path-right"
                     d="M811.874 20.2975C792.267 49.2191 697.757 109.121 623.64 111.474C530.992 114.415 336.157 9.99674 254.522 40.8857C200.11 61.474 216.287 98.2387 244.228 98.2387C308.934 98.2387 254.522 -42.9378 86.8748 20.2975C-56.4582 74.3616 14.816 215.886 86.8748 227.651"
                     stroke="#D22E40" stroke-width="8"></path>
             </svg>

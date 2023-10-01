@@ -52,7 +52,7 @@ body {
 }
 
 @keyframes scroll {
-    0% { transform: translateX(0); }
+    0% { transform: translateX(5px); }
     1% { transform: translateX(0); }
     100% { transform: translateX(calc(-1 * 50vw * (var(--slides-count) - 1))); }
 }
